@@ -22,7 +22,13 @@ const Header: React.FC = () => {
         {/* Logo */}
         <div className="flex-shrink-0">
           <Link href="/">
-            <Image src={logoSrc} alt={logoAlt} width={180} height={60} />
+            <Image
+              src={logoSrc}
+              alt={logoAlt}
+              width={180}
+              height={60}
+              priority // Se asegura de que el logo se cargue primero
+            />
           </Link>
         </div>
 
@@ -88,20 +94,22 @@ const Header: React.FC = () => {
 
           {/* Navegación */}
           <div className="flex justify-end space-x-8">
-            {navLinks.map((link) => (
+            {navLinks.map((link, index) => (
               <Link
-                key={link.href}
-                href={link.href}
+                key={index}
+                href={link}
                 className="text-black hover:text-gray-900 flex items-center"
               >
                 {link.icon && (
-                  <img
+                  <Image
                     src={link.icon}
                     alt={link.label}
-                    className="inline-block mr-2 w-5 h-5"
+                    width={20} // Ajusta el tamaño según sea necesario
+                    height={20}
+                    className="inline-block mr-2"
                   />
                 )}
-                {link.label}
+                {link.toString()}
               </Link>
             ))}
           </div>

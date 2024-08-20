@@ -29,13 +29,10 @@ export const useSiteConfigStore = create<SiteConfig>((set) => ({
   fontSize: '16px',
   logoSrc: '/logo.png',
   logoAlt: '',
-  navLinks: [
-    'SHOP',
-    'MORE PRODUCT OPTIONS',
-    'GIFT CODES',
-    'RETURN POLICY',
-    'CONTACT',
-  ].map((label) => ({ label, href: `/${label.toLowerCase()}` })),
+  navLinks: ['SHOP', 'MORE PRODUCT OPTIONS'].map((label) => ({
+    label,
+    href: `/${label.toLowerCase()}`,
+  })),
   loginText: 'LOGIN',
   cartItemCount: 0,
   user: undefined,
