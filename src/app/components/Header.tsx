@@ -1,41 +1,37 @@
 'use client'
 
 import React from 'react'
-import Image from 'next/image'
 import Link from 'next/link'
-import { useSiteConfigStore } from '../stores/siteConfigStore'
 
 const Header: React.FC = () => {
-  const {
-    primaryColor,
-    fontFamily,
-    logoSrc,
-    logoAlt,
-    navLinks,
-    loginText,
-    cartItemCount,
-  } = useSiteConfigStore()
+  const cartItemCount = 0
+  const navLinks = [
+    { label: 'Shop', href: '/shop' },
+    { label: 'More Product Options', href: '/more-product-options' },
+    { label: 'Gift Codes', href: '/gift-codes' },
+    { label: 'Return Policy', href: '/return-policy' },
+    { label: 'Contact', href: '/contact' },
+  ]
 
   return (
-    <header className="bg-white py-2" style={{ fontFamily }}>
+    <header className="bg-white py-2 font-main">
       <div className="container mx-auto flex justify-between items-center">
         <Link href="/" className="flex-shrink-0">
-          <Image src={logoSrc} alt={logoAlt} width={180} height={60} priority />
+          <div className="logo"></div>{' '}
+          {/* Usando la clase logo para el fondo de la imagen */}
         </Link>
 
         <div className="flex flex-col w-full">
           <div className="flex justify-end items-center space-x-6 mb-2">
             <Link
               href="/login"
-              style={{ color: primaryColor }}
-              className="hover:text-[#34A853]"
+              className="text-primary hover:text-primary-dark"
             >
-              {loginText}
+              LOGIN
             </Link>
             <Link
               href="/cart"
-              style={{ color: primaryColor }}
-              className="relative hover:text-[#34A853]"
+              className="relative text-primary hover:text-primary-dark"
             >
               <svg
                 className="w-6 h-6 inline-block"
@@ -82,19 +78,10 @@ const Header: React.FC = () => {
             {navLinks.map((link, index) => (
               <Link
                 key={index}
-                href=""
+                href={link.href}
                 className="text-black hover:text-gray-900 flex items-center"
               >
-                {link.icon && (
-                  <Image
-                    src={link.href}
-                    alt={link.href}
-                    width={20}
-                    height={20}
-                    className="inline-block mr-2"
-                  />
-                )}
-                {link.toString()}
+                {link.label}
               </Link>
             ))}
           </nav>
