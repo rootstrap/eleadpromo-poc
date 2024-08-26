@@ -79,7 +79,7 @@ const Header: React.FC = () => {
               <Link
                 key={index}
                 href={link.href}
-                className="text-black hover:text-gray-900 flex items-center"
+                className="text-secondary hover:text-gray-900 flex items-center"
               >
                 {link.label}
               </Link>

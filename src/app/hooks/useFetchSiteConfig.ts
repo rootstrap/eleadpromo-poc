@@ -2,36 +2,38 @@ import { useEffect } from 'react'
 import { useQuery } from 'react-query'
 import axios from 'axios'
 
+// Función para convertir camelCase a kebab-case
+const camelToKebab = (str: string) =>
+  str.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase()
+
 const fetchSiteConfig = async () => {
-  const { data } = await axios.get(
-    'https://ba27-167-58-78-14.ngrok-free.app/settings'
-  )
+  const { data } = await axios.get('http://localhost:3001/settings')
   return data
 }
 
 export const useFetchSiteConfig = () => {
-  const { data, error, isLoading } = useQuery('siteConfig', fetchSiteConfig)
+  const { data, error, isLoading } = useQuery('siteConfig', fetchSiteConfig, {
+    staleTime: 0,
+    refetchInterval: 300000, // 5 minutos
+    refetchOnWindowFocus: true,
+  })
 
   useEffect(() => {
-    if (data) {
-      // Inyectar las variables CSS globalmente
-      document.documentElement.style.setProperty(
-        '--primary-color',
-        data.primaryColor
-      )
-      document.documentElement.style.setProperty(
-        '--secondary-color',
-        data.secondaryColor
-      )
-      document.documentElement.style.setProperty(
-        '--font-family',
-        data.fontFamily
-      )
-      document.documentElement.style.setProperty('--font-size', data.fontSize)
-      document.documentElement.style.setProperty(
-        '--logo-src',
-        `url(${data.logoSrc})`
-      )
+    if (data && typeof data === 'object') {
+      for (const [key, value] of Object.entries(data)) {
+        const cssVariable = `--${camelToKebab(key)}`
+
+        // Garantizar que value es un string antes de asignarlo a cssValue
+        let cssValue: string | null = null
+
+        if (typeof value === 'string') {
+          cssValue = key === 'logoSrc' ? `url(${value})` : value
+        }
+
+        if (cssValue) {
+          document.documentElement.style.setProperty(cssVariable, cssValue)
+        }
+      }
     }
   }, [data])
 
