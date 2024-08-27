@@ -7,7 +7,8 @@ const camelToKebab = (str: string) =>
   str.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase()
 
 const fetchSiteConfig = async () => {
-  const { data } = await axios.get('http://localhost:3001/settings')
+  const apiUrl = process.env.NEXT_PUBLIC_BACKEND_API_URL
+  const { data } = await axios.get(`${apiUrl}/settings`)
   return data
 }
 
