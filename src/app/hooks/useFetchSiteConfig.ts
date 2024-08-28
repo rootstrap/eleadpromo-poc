@@ -8,7 +8,11 @@ const camelToKebab = (str: string) =>
 
 const fetchSiteConfig = async () => {
   const apiUrl = process.env.NEXT_PUBLIC_BACKEND_API_URL
-  const { data } = await axios.get(`${apiUrl}/settings`)
+  const storeId = process.env.NEXT_PUBLIC_STORE_ID
+
+  const { data } = await axios.get(
+    `${apiUrl}/settings?store_identification=${storeId}`
+  )
   return data
 }
 
@@ -28,9 +32,10 @@ export const useFetchSiteConfig = () => {
         let cssValue: string | null = null
 
         if (typeof value === 'string') {
-          cssValue = key === 'logoSrc' ? `url(${value})` : value
+          cssValue = key === 'logo' ? `url(${value})` : value
         }
 
+        // Asignar el valor de la variable CSS solo si cssValue no es null
         if (cssValue) {
           document.documentElement.style.setProperty(cssVariable, cssValue)
         }
