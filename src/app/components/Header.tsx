@@ -3,15 +3,25 @@
 import React from 'react'
 import Link from 'next/link'
 
-const Header: React.FC = () => {
+interface NavLink {
+  label: string
+  href: string
+}
+
+interface HeaderProps {
+  navLinks: string[]
+}
+
+const Header: React.FC<HeaderProps> = ({ navLinks }) => {
   const cartItemCount = 0
-  const navLinks = [
-    { label: 'Shop', href: '/shop' },
-    { label: 'More Product Options', href: '/more-product-options' },
-    { label: 'Gift Codes', href: '/gift-codes' },
-    { label: 'Return Policy', href: '/return-policy' },
-    { label: 'Contact', href: '/contact' },
-  ]
+
+  // Mapea los navLinks para agregar un href basado en la etiqueta
+  const mappedNavLinks: NavLink[] = navLinks.map((label) => ({
+    label,
+    href: `/${label.toLowerCase().replace(/\s+/g, '-')}`,
+  }))
+
+  debugger
 
   return (
     <header className="bg-white py-2 font-main">
@@ -75,7 +85,7 @@ const Header: React.FC = () => {
           </div>
 
           <nav className="flex justify-end space-x-8">
-            {navLinks.map((link, index) => (
+            {mappedNavLinks.map((link, index) => (
               <Link
                 key={index}
                 href={link.href}

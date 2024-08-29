@@ -43,5 +43,5 @@ export const useFetchSiteConfig = () => {
     }
   }, [data])
 
-  return { isLoading, error }
+  return { isLoading, error, data }
 }
