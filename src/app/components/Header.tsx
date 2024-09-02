@@ -21,8 +21,6 @@ const Header: React.FC<HeaderProps> = ({ navLinks }) => {
     href: `/${label.toLowerCase().replace(/\s+/g, '-')}`,
   }))
 
-  debugger
-
   return (
     <header className="bg-white py-2 font-main">
       <div className="container mx-auto flex justify-between items-center">
