@@ -1,4 +1,5 @@
 import React from 'react'
+import Image from 'next/image' // Importar el componente Image de Next.js
 
 // Import Swiper core and required modules
 import {
@@ -41,10 +42,13 @@ const Carousel = () => {
       >
         {images.map((src, index) => (
           <SwiperSlide key={index}>
-            <img
+            <Image
               src={src}
               alt={`Carousel Image ${index + 1}`}
-              className="object-cover w-full h-96"
+              className="object-cover"
+              width={1000} // Ajustar el ancho y alto según sea necesario
+              height={400} // Ajustar el ancho y alto según sea necesario
+              layout="responsive" // Usar layout responsive para adaptarse a diferentes tamaños de pantalla
             />
           </SwiperSlide>
         ))}
