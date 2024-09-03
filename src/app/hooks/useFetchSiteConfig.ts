@@ -8,11 +8,8 @@ const camelToKebab = (str: string) =>
 
 const fetchSiteConfig = async () => {
   const apiUrl = process.env.NEXT_PUBLIC_BACKEND_API_URL
-  const storeId = process.env.NEXT_PUBLIC_STORE_ID
 
-  const { data } = await axios.get(
-    `${apiUrl}/settings?store_identification=${storeId}`
-  )
+  const { data } = await axios.get(`${apiUrl}/settings`)
   return data
 }
 

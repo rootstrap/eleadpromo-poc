@@ -24,8 +24,8 @@ export default function RootLayout({ children }: { children: ReactNode }) {
 const Content: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { isLoading, error, data } = useFetchSiteConfig()
 
-  if (isLoading) return <Message message="Loading site configurations..." />
-  if (error) return <Message message="Error loading site configurations" />
+  // if (isLoading) return <Message message="Loading site configurations..." />
+  // if (error) return <Message message="Error loading site configurations" />
 
   const navLinks = data?.navLinks || []
 
