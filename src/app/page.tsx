@@ -22,7 +22,7 @@ export default function Home() {
           <Link href={`/product/${product.id}`} key={product.id}>
             <div className="group rounded-lg border border-gray-200 p-5 transition-colors hover:border-gray-300 hover:bg-gray-100 cursor-pointer">
               <Image
-                src={product.thumbnail}
+                src={product.images[0]}
                 alt={product.title}
                 width={200}
                 height={200}
