@@ -36,24 +36,24 @@ export default async function RootLayout({
   const cssVariables = Object.entries(siteConfig || {}).reduce(
     (acc, [key, value]) => {
       if (typeof value === 'string') {
-        const cssValue = key === 'logo' ? `url(${value})` : value
         const cssVariable = `--${camelToKebab(key)}`
-        acc[cssVariable] = cssValue
+        acc[cssVariable] = value
       }
       return acc
     },
     {} as Record<string, string>
   )
 
+  // Convertir las variables CSS en una cadena que se inyectará en el <style>
+  const cssVariablesString = Object.entries(cssVariables)
+    .map(([key, value]) => `${key}: ${value};`)
+    .join(' ')
+
   return (
     <html lang="en">
       <head>
         {/* Aplicar estilos inline generados en el servidor */}
-        <style>
-          {Object.entries(cssVariables).map(
-            ([key, value]) => `${key}: ${value};`
-          )}
-        </style>
+        <style>{`:root { ${cssVariablesString} }`}</style>
       </head>
       <body className="min-h-screen flex flex-col">
         <ReactQueryProvider>

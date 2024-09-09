@@ -21,6 +21,7 @@ export const useFetchSiteConfig = () => {
   })
 
   useEffect(() => {
+    debugger
     if (data && typeof data === 'object') {
       for (const [key, value] of Object.entries(data)) {
         const cssVariable = `--${camelToKebab(key)}`
