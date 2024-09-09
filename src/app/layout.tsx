@@ -5,34 +5,27 @@ import Footer from './components/Footer'
 import { fetchSiteConfig } from './lib/fetchSiteConfig'
 import ReactQueryProvider from './ReactQueryProvider'
 import ClientSideConfigUpdater from './components/ClientSideConfigUpdater'
-import { headers } from 'next/headers' // Importa la función headers
+import { headers } from 'next/headers'
 
-// Función para convertir camelCase a kebab-case en el servidor
 const camelToKebab = (str: string) =>
   str.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase()
 
-// Este es el layout del servidor
 export default async function RootLayout({
   children,
 }: {
   children: ReactNode
 }) {
-  // Obtener los encabezados del servidor
   const requestHeaders = headers()
   const origin = requestHeaders.get('origin') || requestHeaders.get('host')
 
-  // Verificar que el 'origin' no sea null
   if (!origin) {
     throw new Error('No host or origin header found')
   }
 
-  // Imprimir el origin para depuración en el servidor de Node.js
   console.log('Origin/Host detected on the server:', origin)
 
-  // Obtener los datos del servidor usando el origin como parámetro
   const siteConfig = await fetchSiteConfig(`http://${origin}`)
 
-  // Generar variables CSS en el servidor
   const cssVariables = Object.entries(siteConfig || {}).reduce(
     (acc, [key, value]) => {
       if (typeof value === 'string') {
@@ -44,7 +37,6 @@ export default async function RootLayout({
     {} as Record<string, string>
   )
 
-  // Convertir las variables CSS en una cadena que se inyectará en el <style>
   const cssVariablesString = Object.entries(cssVariables)
     .map(([key, value]) => `${key}: ${value};`)
     .join(' ')
@@ -52,12 +44,10 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <head>
-        {/* Aplicar estilos inline generados en el servidor */}
         <style>{`:root { ${cssVariablesString} }`}</style>
       </head>
       <body className="min-h-screen flex flex-col">
         <ReactQueryProvider>
-          {/* Este componente actualizará las configuraciones en el cliente usando React Query */}
           <ClientSideConfigUpdater initialConfig={siteConfig} />
           <Content siteConfig={siteConfig}>{children}</Content>
         </ReactQueryProvider>

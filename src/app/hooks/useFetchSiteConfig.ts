@@ -26,14 +26,12 @@ export const useFetchSiteConfig = () => {
       for (const [key, value] of Object.entries(data)) {
         const cssVariable = `--${camelToKebab(key)}`
 
-        // Garantizar que value es un string antes de asignarlo a cssValue
         let cssValue: string | null = null
 
         if (typeof value === 'string') {
           cssValue = key === 'logo' ? `url(${value})` : value
         }
 
-        // Asignar el valor de la variable CSS solo si cssValue no es null
         if (cssValue) {
           document.documentElement.style.setProperty(cssVariable, cssValue)
         }
